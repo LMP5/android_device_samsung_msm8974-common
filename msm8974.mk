@@ -22,6 +22,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml \
+    frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
@@ -36,11 +37,10 @@ PRODUCT_COPY_FILES += \
 
 # System properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    af.resampler.quality=4 \
     audio.offload.buffer.size.kb=32 \
     audio.offload.gapless.enabled=false \
-    av.offload.enable=true \
-    qcom.hw.aac.encoder=true
+    mm.enable.qcom_parser=3314291 \
+    av.offload.enable=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196608
@@ -65,6 +65,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.isUsbOtgEnabled=true
+
 # Audio
 PRODUCT_PACKAGES += \
     audiod \
@@ -78,11 +81,6 @@ PRODUCT_PACKAGES += \
     libqcompostprocbundle \
     libqcomvoiceprocessing \
     tinymix
-
-# Camera
-PRODUCT_PACKAGES += \
-    camera.msm8974 \
-    libxml2
 
 # CRDA
 PRODUCT_PACKAGES += \
@@ -110,35 +108,33 @@ PRODUCT_COPY_FILES += \
 
 # Media
 PRODUCT_COPY_FILES += \
+    frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml  \
     device/samsung/msm8974-common/configs/media_codecs.xml:system/etc/media_codecs.xml
-
-PRODUCT_PACKAGES += \
-    qcmediaplayer
-
-PRODUCT_BOOT_JARS += \
-    qcmediaplayer
 
 # OMX
 PRODUCT_PACKAGES += \
+    libc2dcolorconvert \
+    libdivxdrmdecrypt \
     libdashplayer \
+    libOmxAacEnc \
+    libOmxAmrEnc \
     libOmxCore \
+    libOmxEvrcEnc \
+    libOmxQcelp13Enc \
     libOmxVdec \
     libOmxVdecHevc \
     libOmxVenc \
-    libOmxAacEnc \
-    libOmxAmrEnc \
-    libOmxEvrcEnc \
-    libOmxQcelp13Enc \
-    libstagefrighthw
+    libstagefrighthw \
+    qcmediaplayer
+
+PRODUCT_BOOT_JARS += qcmediaplayer
 
 # Power HAL
 PRODUCT_PACKAGES += \
     power.msm8974
-
-# QRNGD
-PRODUCT_PACKAGES += \
-    qrngd \
-    qrngp
 
 # USB
 PRODUCT_PACKAGES += \
